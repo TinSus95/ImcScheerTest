@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Cacheable
-public class LearningComponentType {
+public class LearningComponentCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

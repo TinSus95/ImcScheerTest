@@ -64,9 +64,9 @@ public class ApiController {
                 .body(response);
     }
 
-    @GetMapping(value = "lms/my-elearings/{component_id}")
+    @GetMapping(value = "lms/my-elearings/{componentId}")
     public ResponseEntity<CustomPage<LearningComponentDetails>> getELearningComponentDetails(@RequestHeader Map<String, String> headers,
-                                                                                 @PathVariable String component_id){
+                                                                                 @PathVariable Long componentId){
         if(!headers.containsKey("authorization")){
             return generateCustomErrorPageResponse(LearningComponentDetails.class, HttpStatus.UNAUTHORIZED, "Please provide username and password in the auth.");
         }
@@ -77,7 +77,7 @@ public class ApiController {
             return generateCustomErrorPageResponse(LearningComponentDetails.class, HttpStatus.UNAUTHORIZED, "Invalid user data.");
         }
 
-        Optional<UserLearning> userLearning = this.getUserLearning(user.get(), component_id);
+        Optional<UserLearning> userLearning = this.getUserLearning(user.get(), componentId);
         if(userLearning.isEmpty()){
             return generateCustomErrorPageResponse(LearningComponentDetails.class, HttpStatus.NOT_FOUND, "Resource not found");
         }
@@ -123,7 +123,7 @@ public class ApiController {
      * @param learningId - String representing eLearningComponent ID to be used as a filter for the query
      * @return - Optional<UserLearning> from UserLearningRepo
      */
-    private Optional<UserLearning> getUserLearning(User user, String learningId){
+    private Optional<UserLearning> getUserLearning(User user, Long learningId){
         return userLearningRepo.findByUserIdAndComponentId(user.getId(), learningId);
     }
 

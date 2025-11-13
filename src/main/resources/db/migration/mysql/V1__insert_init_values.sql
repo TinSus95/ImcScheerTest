@@ -1,12 +1,5 @@
 #   DB INIT VALUES
 
-INSERT INTO `learning_component_type` (`id`,`name`)
-VALUES
-    (1, 'Course'),
-    (2, 'Media'),
-    (3, 'Programme')
-ON DUPLICATE KEY UPDATE `name` = VALUES(`name`);
-
 INSERT INTO `user_status` (`id`,`name`)
 VALUES
     (1, 'Booked'),
@@ -26,8 +19,61 @@ INSERT IGNORE INTO `user` (`id`, `username`, `password`)
 VALUES
     (1, 'admin', 'root'),
     (2, 'user_1', 'test'),
-    (3, 'user_2', 'test');
+    (3, 'user_2', 'test'),
+    (4, 'admin2', 'root');
 
+INSERT IGNORE INTO `learning_component_category` (`id`, `name`)
+VALUES
+    (1, 'Software Development'),
+    (2, 'Project Management')
+ON DUPLICATE KEY UPDATE `name` = VALUES(`name`);
+
+INSERT IGNORE INTO `learning_component` (`id`, `name`, `description`, `category_id`, `type`, `image_url`, `duration`)
+VALUES
+    (1, 'Introduction to Scrum', 'This course provides a comprehensive introduction to the Scrum framework...', 1, 'Course', 'http://example.com/images/scrum_course.jpg', 8),
+    (2, 'Agile Methodologies Overview Video', 'Video about Agile methodologies', 1, 'Media', 'http://example.com/images/agile_video.png', 4),
+    (3, 'Kanban Overview', 'Kanban programme', 2, 'Programme', 'http://example.com/images/kanban_overview.png', 1);
+
+INSERT IGNORE INTO `component_tag` (`component_id`, `tag_id`)
+VALUES
+    (1, 1),
+    (1, 2),
+    (1, 3),
+    (1, 4),
+    (2, 1),
+    (2, 2),
+    (2, 3),
+    (2, 4),
+    (3, 3);
+
+
+INSERT IGNORE INTO `user_learning` (`user_id`, `component_id`, `status_id`, `start_date`, `end_date`)
+VALUES
+    (1, 1, 1, NOW(), date_add(NOW(), INTERVAL 1 YEAR)),
+    (1, 2, 2, NOW(), date_add(NOW(), INTERVAL 1 YEAR)),
+    (2, 3, 3, NOW(), date_add(NOW(), INTERVAL 1 YEAR)),
+    (3, 1, 3, NOW(), null);
+
+
+--      Query for when learning component type was an entity
+/*
+INSERT INTO `learning_component_type` (`id`,`name`)
+VALUES
+    (1, 'Course'),
+    (2, 'Media'),
+    (3, 'Programme')
+ON DUPLICATE KEY UPDATE `name` = VALUES(`name`);
+
+
+INSERT IGNORE INTO `learning_component` (`id`, `name`, `description`, `category`, `type_id`, `image_url`, `duration`)
+VALUES
+    (1, 'Introduction to Scrum', 'This course provides a comprehensive introduction to the Scrum framework...', 1, 1, 'http://example.com/images/scrum_course.jpg', 8),
+    (2, 'Agile Methodologies Overview Video', 'Video about Agile methodologies', 1, 2, 'http://example.com/images/agile_video.png', 4),
+    (3, 'Kanban Overview', 'Kanban programme', 2, 3, 'http://example.com/images/kanban_overview.png', 1);
+*/
+
+--      Queries for when learning_component_id was a String
+/*
 INSERT IGNORE INTO `learning_component` (`id`, `name`, `description`, `category`, `type_id`, `image_url`, `duration`)
 VALUES
     ('eLearningComponentId123', 'Introduction to Scrum', 'This course provides a comprehensive introduction to the Scrum framework...', 'Software Development', 1, 'http://example.com/images/scrum_course.jpg', 8),
@@ -53,3 +99,4 @@ VALUES
     (1, 'eLearningComponentId456', 2, NOW(), date_add(NOW(), INTERVAL 1 YEAR)),
     (2, 'eLearningComponentId789', 3, NOW(), date_add(NOW(), INTERVAL 1 YEAR)),
     (3, 'eLearningComponentId123', 3, NOW(), null);
+*/

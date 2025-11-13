@@ -6,5 +6,5 @@ import org.tsimcsheertest.test.Models.UserLearning;
 import java.util.Optional;
 
 public interface UserLearningRepo extends Repository<UserLearning, Long> {
-    public Optional<UserLearning> findByUserIdAndComponentId(Long user_id, String learning_id);
+    public Optional<UserLearning> findByUserIdAndComponentId(Long user_id, Long learning_id);
 }

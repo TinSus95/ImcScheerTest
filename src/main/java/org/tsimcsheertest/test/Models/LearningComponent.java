@@ -1,13 +1,14 @@
 package org.tsimcsheertest.test.Models;
 
 import jakarta.persistence.*;
+import org.tsimcsheertest.test.Constants.LearningComponentType;
 
 import java.util.Set;
 
 @Entity
 public class LearningComponent {
     @Id
-    private String id;
+    private Long id;
 
     @Column
     private String name;
@@ -15,8 +16,7 @@ public class LearningComponent {
     @Column
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "type_id")
+    @Enumerated(EnumType.STRING)
     private LearningComponentType type;
 
     @ManyToMany
@@ -32,13 +32,14 @@ public class LearningComponent {
     @Column
     private long duration;
 
-    @Column
-    private String category;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private LearningComponentCategory category;
 
     @OneToMany(mappedBy = "component")
     private Set<UserLearning> subscribedUser;
 
-    public String getId(){
+    public Long getId(){
         return this.id;
     }
 
@@ -62,7 +63,7 @@ public class LearningComponent {
         return this.metaTags;
     }
 
-    public String getCategory(){
+    public LearningComponentCategory getCategory(){
         return this.category;
     }
 
@@ -74,7 +75,7 @@ public class LearningComponent {
         return this.duration;
     }
 
-    public void setId(String id){
+    public void setId(Long id){
         this.id = id;
     }
 
@@ -102,7 +103,7 @@ public class LearningComponent {
         this.duration = duration;
     }
 
-    public void setCategory(String category){
+    public void setCategory(LearningComponentCategory category){
         this.category = category;
     }
 
